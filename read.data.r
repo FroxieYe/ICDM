@@ -9,6 +9,7 @@ if (devicename == 'YUQINLAPTOP') {
   output.path <- "C:/Users/Yuqin/Google Drive/Sharing/ICDM2015/Data"
 }
 setwd(data.path)
+install.packages("readr")
 library(readr)
 train <- read_csv(file.path(data.path, "dev_train_basic.csv"))
 cat("There are ", nrow(train), " devices in the device train file")
@@ -18,13 +19,6 @@ device <- rbind(train, test)
 cat("There are", length(unique(device$device_type)), "unique device types")
 cat("There are", length(unique(device$device_os)), "unique device operating systems")
 cat("There are", length(unique(device$country)), "unique countries")
-library(dplyr)
-library(ggvis)
-device %>%
-group_by(device_type) %>%
-summarize(count=length(device_type)) %>%
-ggvis(~device_type, ~count) %>%
-layer_bars(fill:="#20beff")
 cookie <- read_csv(file.path(data.path, "cookie_all_basic.csv"))
 
 read_bad_csv <- function(file_name, bad_col=3, n_max=-1) {
